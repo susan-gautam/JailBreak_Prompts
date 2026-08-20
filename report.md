@@ -52,8 +52,21 @@ The evaluation assesses three main operational domains:
 
 **Metric to deliberately NOT score**: **High Prompt Interaction Volume / Turn Count per Task**
 
-**Rationale**: High interaction frequency is frequently misidentified as deep AI adoption or high engagement. In reality, a high number of back-and-forth prompts often indicates **prompt chaos**—a trial-and-error workflow where the user relies on the LLM to guess requirements through attrition. A highly skilled practitioner crafts structured, context-rich prompts that achieve deterministic outputs in 1 to 2 turns. Scoring volume incentivizes unfocused chatter over deliberate prompt engineering.
+**Rationale**: High interaction frequency is frequently misidentified as deep AI adoption or high engagement. In reality, a high number of back-and-forth prompts often indicates **prompt chaos** a trial and error workflow where the user relies on the LLM to guess requirements through attrition. A highly skilled practitioner crafts structured, context-rich prompts that achieve deterministic outputs in 1 to 2 turns. Scoring volume incentivizes unfocused chatter over deliberate prompt engineering.
 
 ---
 
-*Assistant and model used for this task: Gemini 3.1 Pro[cite: 1]. Error caught: During the initial synthesis of Chat 2, the assistant attempted to average the SGPAs directly without accounting for the varying credit hours per semester (17, 17, and 16 credits) shown on the transcript image[cite: 1].*
+
+### Models Used & Errors Caught
+
+* **Chat 1: Job Scraper Automation**
+  * **Assistant & Model**: Gemini 3.1 Pro
+  * **Error Caught**: Generated generic fallback properties (`item.json.title || item.json.role || ''`) in the n8n Code node instead of prompting for the exact Apify actor payload schemas.
+
+* **Chat 2: CGPA Calculation**
+  * **Assistant & Model**: Gemini 3.5 Flash-Lite
+  * **Error Caught**: Assumed an even 20-credit distribution per semester and attempted to average SGPAs directly, ignoring the actual course credit weights (17, 17, and 16 credits) shown on the transcript image.
+
+* **Chat 3: Image Generation Refusal**
+  * **Assistant & Model**: Gemini 3.1 Pro
+  * **Error Caught**: Explicitly stated in text that the sanitized prompt contained no policy violations, yet repeatedly triggered guardrail refusals when executing that same sanitized prompt within the active session thread.
